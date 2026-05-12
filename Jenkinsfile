@@ -3,21 +3,27 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                echo 'Cloning Repository'
-            }
-        }
-
         stage('Build Maven Project') {
             steps {
                 sh 'mvn clean package'
             }
         }
 
-        stage('Verify Artifact') {
+        stage('Build Docker Image') {
             steps {
-                sh 'ls -l target'
+                sh 'docker build -t java-maven-app .'
+            }
+        }
+
+        stage('Verify Docker Image') {
+            steps {
+                sh 'docker images'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh 'docker run -d --name java-container java-maven-app'
             }
         }
     }
