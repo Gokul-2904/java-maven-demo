@@ -11,19 +11,19 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t java-maven-app .'
+                sh 'sudo docker build -t java-maven-app .'
             }
         }
 
         stage('Verify Docker Image') {
             steps {
-                sh 'docker images'
+                sh 'sudo docker images'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                sh 'docker run -d --name java-container java-maven-app'
+                sh 'sudo docker run -d --name java-container java-maven-app'
             }
         }
     }
